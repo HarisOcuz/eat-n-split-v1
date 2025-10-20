@@ -1,0 +1,115 @@
+html {
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1.6rem;
+}
+
+.App {
+  width: 100rem;
+  margin: 20rem auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+ul {
+  list-style-type: none;
+}
+.sidebar,
+.splitting-bill-form {
+  padding: 3rem 6rem;
+  background-color: #e8faf2;
+}
+
+.li-friends {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: repeat(3, auto); /* ili koliko redova već imaš */
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+  align-items: start;
+  font-weight: 400;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.li-friends:hover {
+  background-color: #cff8e6;
+}
+
+li img {
+  grid-row: 1/3;
+  align-self: center;
+  border-radius: 50%;
+}
+li button {
+  grid-column: 3;
+  grid-row: 1/4;
+  align-self: center;
+  justify-self: center;
+  border: 1px solid #baf7dd;
+}
+
+li label {
+  align-self: center;
+  justify-self: start;
+}
+
+button {
+  border-radius: 9px;
+  padding: 3px 6px 3px 6px;
+  transition: all 0.3s;
+}
+button:hover {
+  cursor: pointer;
+  background-color: #dff8ed;
+}
+.custom-friend {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 0.3rem;
+  margin-bottom: 2.5rem;
+}
+
+.custom-friend button {
+  grid-column: 2;
+  grid-row: -1/-3;
+  justify-self: center;
+  align-self: center;
+}
+.custom-friend input {
+  justify-self: start;
+  padding: 4px 8px 4px 8px;
+}
+
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+
+/* RIGHT SIDE OF THE INTERFACE  */
+
+.splitting-bill-form {
+  font-weight: 600;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.splitting-bill-form h3 {
+  grid-column: 1/3;
+}
+
+.splitting-bill-form h3,
+label,
+input,
+select {
+  justify-self: center;
+  align-self: center;
+}
