@@ -29,9 +29,9 @@ const initialFriends = [
   },
 ];
 
-function Button({ children, onShowForm }) {
+function Button({ children, onClick }) {
   return (
-    <button className="btn" onClick={onShowForm}>
+    <button className="btn" onClick={onClick}>
       {children}
     </button>
   );
@@ -46,43 +46,87 @@ export default function App() {
     setShowForm((prev) => !prev);
   }
 
+  // ADDING CUSTOM FRIEND
+
+  const [addFriends, setAddFriends] = useState(initialFriends);
+
+  function handleAddFriends(friend) {
+    setAddFriends((friends) => [...addFriends, friend]);
+    setShowForm(false);
+  }
+
+  // SELECTED FRIEND
+
+  const [selectedFriend, setSelectedFriend] = useState(null);
+
+  function handleSelectFriend(friend) {
+    if (selectedFriend !== friend) {
+      setSelectedFriend(friend);
+    } else setSelectedFriend(null);
+  }
+
   return (
     <div className="App">
       <div className="sidebar">
-        <FriendsList onShowForm={handleShowForm} />
-        {showForm && <CustomFriend />}
+        <FriendsList
+          onShowForm={handleShowForm}
+          addFriends={addFriends}
+          onSelectedFriend={handleSelectFriend}
+          selectedFriend={selectedFriend}
+        />
+        {showForm && <CustomFriend onAddFriends={handleAddFriends} />}
         <AddFriend onShowForm={handleShowForm} showForm={showForm} />
       </div>
-      <SplitingTheBill />
+      {selectedFriend && <SplitingTheBill selectedFriend={selectedFriend} />}
     </div>
   );
 }
 
-function FriendsList() {
-  const friends = initialFriends;
+function FriendsList({ addFriends, onSelectedFriend, selectedFriend }) {
+  const friends = addFriends;
 
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} />
+        <Friend
+          onSelectedFriend={onSelectedFriend}
+          selectedFriend={selectedFriend}
+          friend={friend}
+          key={friend.id}
+        />
       ))}
     </ul>
   );
 }
 
-function Friend({ friend }) {
+function Friend({ friend, onSelectedFriend, selectedFriend }) {
   return (
-    <li className="li-friends">
+    <li
+      className="li-friends"
+      style={
+        selectedFriend && selectedFriend.id === friend.id
+          ? { backgroundColor: "#e1f9ee" }
+          : {}
+      }
+    >
       <img src={friend.image} alt="." />
 
       <label>{friend.name}</label>
-      <Button className="btn">Auswählen</Button>
+      <Button onClick={() => onSelectedFriend(friend)} className="btn">
+        {selectedFriend && selectedFriend.id === friend.id
+          ? "Zumachen"
+          : "Auswählen"}
+      </Button>
 
       {friend.balance > 0 && (
-        <p className="green">{`${friend.name} schuldet dir ${friend.balance}€`}</p>
+        <p className="green">{`${friend.name} schuldet dir ${Math.abs(
+          friend.balance
+        )}€`}</p>
       )}
       {friend.balance < 0 && (
-        <p className="red">{`Du schuldest ${friend.name} ${friend.balance}€`}</p>
+        <p className="red">{`Du schuldest ${friend.name} ${Math.abs(
+          friend.balance
+        )}€`}</p>
       )}
       {friend.balance === 0 && <p>{`${friend.name} und du seit quit`}</p>}
     </li>
@@ -92,36 +136,74 @@ function Friend({ friend }) {
 function AddFriend({ onShowForm, showForm }) {
   console.log(showForm);
   return (
-    <Button onShowForm={onShowForm}>
+    <Button onClick={onShowForm}>
       {showForm ? "Zumachen" : "Freund zufügen"}
     </Button>
   );
 }
 
-function CustomFriend() {
+function CustomFriend({ onAddFriends }) {
+  const [customFriend, setCustomFriend] = useState("");
+  const [customUrl, setCustomUrl] = useState("https://i.pravatar.cc/48");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!customFriend || !customUrl) return;
+
+    const id = crypto.randomUUID();
+
+    const newFriend = {
+      name: customFriend,
+      id,
+      image: `${customUrl}?=${id}`,
+      balance: 0,
+    };
+    onAddFriends(newFriend);
+  }
+
+  function handleCustomUrl(e) {
+    setCustomUrl(e.target.value);
+  }
+
+  function handleCustomFriend(e) {
+    setCustomFriend(e.target.value);
+    console.log(customFriend);
+  }
+
   return (
     <form className="custom-friend">
-      <input className="input" placeholder="Namen eingeben" />
-      <input className="input" placeholder="URL eingeben" />
-      <Button>Bestätigen</Button>
+      <input
+        value={customFriend}
+        onChange={handleCustomFriend}
+        className="input"
+        placeholder="Namen eingeben"
+      />
+      <input
+        value={customUrl}
+        onChange={handleCustomUrl}
+        className="input"
+        placeholder="URL eingeben"
+      />
+      <Button onClick={handleSubmit}>Bestätigen</Button>
     </form>
   );
 }
 
-function SplitingTheBill() {
+function SplitingTheBill({ selectedFriend }) {
   return (
     <form className="splitting-bill-form">
-      <h3>Splitte die Rechnung mit XXX</h3>
-      <label>Wie hoch ist die Rechnung</label>
+      <h3>{`Splitte die Rechnung mit ${selectedFriend.name}`}</h3>
+      <label>Wie hoch ist die Rechnung :</label>
       <input type="text"></input>
-      <label>Dein Anteil</label>
+      <label>Dein Anteil :</label>
       <input type="text"></input>
-      <label>XXXs Anteil</label>
+      <label>{selectedFriend.name}´s Anteil :</label>
       <input type="text" disabled></input>
       <label>Wer zahlt die Rechnung ?</label>
       <select>
         <option>Haris</option>
-        <option>Fatima</option>
+        <option>{selectedFriend.name}</option>
       </select>
     </form>
   );

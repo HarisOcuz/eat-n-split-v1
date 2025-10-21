@@ -18,11 +18,12 @@ html {
 }
 ul {
   list-style-type: none;
+  margin-bottom: 3rem;
 }
 .sidebar,
 .splitting-bill-form {
   padding: 3rem 6rem;
-  background-color: #e8faf2;
+  border-radius: 8px;
 }
 
 .li-friends {
@@ -33,12 +34,13 @@ ul {
   margin-bottom: 1rem;
   align-items: start;
   font-weight: 400;
-  border-radius: 8px;
   transition: all 0.3s;
+  padding: 4px 8px;
+  border-radius: 8px;
 }
 
 .li-friends:hover {
-  background-color: #cff8e6;
+  background-color: #e1f9ee;
 }
 
 li img {
@@ -51,7 +53,6 @@ li button {
   grid-row: 1/4;
   align-self: center;
   justify-self: center;
-  border: 1px solid #baf7dd;
 }
 
 li label {
@@ -61,12 +62,13 @@ li label {
 
 button {
   border-radius: 9px;
-  padding: 3px 6px 3px 6px;
+  padding: 4px 8px;
   transition: all 0.3s;
+  background-color: #baf9de;
+  border: none;
 }
 button:hover {
   cursor: pointer;
-  background-color: #dff8ed;
 }
 .custom-friend {
   display: grid;
@@ -87,6 +89,10 @@ button:hover {
   padding: 4px 8px 4px 8px;
 }
 
+input {
+  border: 2px solid #baf9de;
+}
+
 .red {
   color: red;
 }
@@ -97,10 +103,11 @@ button:hover {
 /* RIGHT SIDE OF THE INTERFACE  */
 
 .splitting-bill-form {
+  max-height: 400px;
   font-weight: 600;
-  border-radius: 8px;
   display: grid;
   grid-template-columns: auto auto;
+  transition: all 1s;
 }
 .splitting-bill-form h3 {
   grid-column: 1/3;
