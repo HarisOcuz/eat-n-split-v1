@@ -6,7 +6,7 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .App {
@@ -15,18 +15,26 @@ html {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+  font-family: "Inter";
+  font-weight: 500;
+  color: #032514;
 }
 ul {
   list-style-type: none;
   margin-bottom: 3rem;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); */
+  border-radius: 8px;
+  padding: 4px 8px;
 }
 .sidebar,
 .splitting-bill-form {
   padding: 3rem 6rem;
   border-radius: 8px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25); */
 }
 
 .li-friends {
+  width: 40rem;
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-rows: repeat(3, auto); /* ili koliko redova već imaš */
@@ -40,7 +48,8 @@ ul {
 }
 
 .li-friends:hover {
-  background-color: #e1f9ee;
+  background-color: #e3f8ed;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 li img {
@@ -62,10 +71,10 @@ li label {
 
 button {
   border-radius: 9px;
-  padding: 4px 8px;
+  padding: 6px 12px;
   transition: all 0.3s;
   background-color: #baf9de;
-  border: none;
+  border: 2px solid #9cf6cf;
 }
 button:hover {
   cursor: pointer;
@@ -76,6 +85,11 @@ button:hover {
   grid-template-rows: auto auto;
   gap: 0.3rem;
   margin-bottom: 2.5rem;
+  background-color: #e3f8ed;
+
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .custom-friend button {
@@ -87,10 +101,15 @@ button:hover {
 .custom-friend input {
   justify-self: start;
   padding: 4px 8px 4px 8px;
+  width: 15rem;
 }
 
 input {
-  border: 2px solid #baf9de;
+  border: 2px solid #9cf6cf;
+  width: 10rem;
+  padding: 4px 8px;
+  text-align: center;
+  border-radius: 8px;
 }
 
 .red {
@@ -104,19 +123,29 @@ input {
 
 .splitting-bill-form {
   max-height: 400px;
-  font-weight: 600;
   display: grid;
   grid-template-columns: auto auto;
   transition: all 1s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  background-color: #e3f8ed;
 }
 .splitting-bill-form h3 {
   grid-column: 1/3;
+  font-size: 1.8rem;
 }
 
 .splitting-bill-form h3,
 label,
 input,
 select {
-  justify-self: center;
   align-self: center;
+}
+svg {
+  height: 1.8rem;
+  translate: 0 3px;
+  margin-right: 1rem;
+}
+
+.splitting-bill-form label {
+  width: 23rem;
 }
