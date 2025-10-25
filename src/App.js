@@ -65,6 +65,32 @@ export default function App() {
     } else setSelectedFriend(null);
   }
 
+  //  WHO IS PAYING THE BILL FUNCTION
+
+  const [bill, setBill] = useState("");
+  const [myPart, setMyPart] = useState("");
+  const friendsPart = bill - myPart;
+
+  const [payer, setPayer] = useState("Du");
+  function handleSetPayer(e) {
+    setPayer(e.target.value);
+  }
+
+  // function updatingTheBalance(e) {
+  //   e.preventDefault();
+  //   if (payer === selectedFriend.name) {
+
+  //   }
+  // }
+
+  function handleSetMyPart(e) {
+    setMyPart(Number(e.target.value));
+  }
+
+  function handleSetBill(e) {
+    setBill(Number(e.target.value));
+  }
+
   return (
     <div className="App">
       <div className="sidebar">
@@ -77,7 +103,18 @@ export default function App() {
         {showForm && <CustomFriend onAddFriends={handleAddFriends} />}
         <AddFriend onShowForm={handleShowForm} showForm={showForm} />
       </div>
-      {selectedFriend && <SplitingTheBill selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <SplitingTheBill
+          selectedFriend={selectedFriend}
+          bill={bill}
+          onSetBill={handleSetBill}
+          myPart={myPart}
+          onSetMyPart={handleSetMyPart}
+          payer={payer}
+          onSetPayer={handleSetPayer}
+          friendsPart={friendsPart}
+        />
+      )}
     </div>
   );
 }
@@ -193,7 +230,16 @@ function CustomFriend({ onAddFriends }) {
   );
 }
 
-function SplitingTheBill({ selectedFriend }) {
+function SplitingTheBill({
+  selectedFriend,
+  bill,
+  payer,
+  myPart,
+  friendsPart,
+  onSetBill,
+  onSetMyPart,
+  onSetPayer,
+}) {
   return (
     <form className="splitting-bill-form">
       <h3>{`Splitte die Rechnung mit ${selectedFriend.name}`}</h3>
@@ -214,7 +260,7 @@ function SplitingTheBill({ selectedFriend }) {
         </svg>
         Wie hoch ist die Rechnung
       </label>
-      <input type="text"></input>
+      <input type="text" value={bill} onChange={onSetBill}></input>
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -232,7 +278,7 @@ function SplitingTheBill({ selectedFriend }) {
         </svg>
         Dein Anteil
       </label>
-      <input type="text"></input>
+      <input type="text" value={myPart} onChange={onSetMyPart}></input>
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +296,7 @@ function SplitingTheBill({ selectedFriend }) {
         </svg>
         {selectedFriend.name}´s Anteil
       </label>
-      <input type="text" disabled></input>
+      <input type="text" disabled value={friendsPart}></input>
       <label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -268,10 +314,12 @@ function SplitingTheBill({ selectedFriend }) {
         </svg>
         Wer zahlt die Rechnung
       </label>
-      <select>
-        <option>Haris</option>
+      <select value={payer} onChange={onSetPayer}>
+        <option>Du</option>
         <option>{selectedFriend.name}</option>
       </select>
+      {/* <button>Bestätigen</button> */}
+      <Button>Bestätigen</Button>
     </form>
   );
 }

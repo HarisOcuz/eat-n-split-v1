@@ -149,3 +149,13 @@ svg {
 .splitting-bill-form label {
   width: 23rem;
 }
+
+.splitting-bill-form button {
+  grid-column: -3/-1;
+  justify-self: center;
+  align-self: center;
+}
+
+.splitting-bill-form button:hover {
+  transform: scale(110%);
+}
