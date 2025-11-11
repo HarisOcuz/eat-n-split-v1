@@ -62,6 +62,7 @@ export default function App() {
   function handleSelectFriend(friend) {
     if (selectedFriend !== friend) {
       setSelectedFriend(friend);
+      setShowForm(false);
     } else setSelectedFriend(null);
   }
 
@@ -84,7 +85,7 @@ export default function App() {
   // }
 
   function handleSetMyPart(e) {
-    setMyPart(Number(e.target.value));
+    setMyPart(Number(e.target.value) > bill ? myPart : Number(e.target.value));
   }
 
   function handleSetBill(e) {
