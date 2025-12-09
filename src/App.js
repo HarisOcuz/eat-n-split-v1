@@ -55,6 +55,9 @@ export default function App() {
     setShowForm(false);
   }
 
+ 
+  
+
   // SELECTED FRIEND
 
   const [selectedFriend, setSelectedFriend] = useState(null);
@@ -77,12 +80,7 @@ export default function App() {
     setPayer(e.target.value);
   }
 
-  // function updatingTheBalance(e) {
-  //   e.preventDefault();
-  //   if (payer === selectedFriend.name) {
-
-  //   }
-  // }
+ 
 
   function handleSetMyPart(e) {
     setMyPart(Number(e.target.value) > bill ? myPart : Number(e.target.value));
@@ -90,6 +88,17 @@ export default function App() {
 
   function handleSetBill(e) {
     setBill(Number(e.target.value));
+  }
+
+  // UPDATING THE BALANCE AFTER PAYING //
+
+   function handleSplitBill (value) {
+   setAddFriends((friends) => friends.map(friend => friend.id === selectedFriend.id ? {...friend, balance : friend.balance + value} : friend)) ;
+
+   setSelectedFriend(null);
+   setBill("");
+   setMyPart("");
+
   }
 
   return (
@@ -114,6 +123,8 @@ export default function App() {
           payer={payer}
           onSetPayer={handleSetPayer}
           friendsPart={friendsPart}
+          onSplitBill = {handleSplitBill}
+          
         />
       )}
     </div>
@@ -240,9 +251,20 @@ function SplitingTheBill({
   onSetBill,
   onSetMyPart,
   onSetPayer,
+  onSplitBill
 }) {
+
+  function handleSubmit(e) {
+  e.preventDefault();
+  if (!bill || !myPart ) return;
+
+  onSplitBill(payer === "Du" ? friendsPart : -myPart)
+
+
+}
+
   return (
-    <form className="splitting-bill-form">
+    <form className="splitting-bill-form" onSubmit={handleSubmit} > 
       <h3>{`Splitte die Rechnung mit ${selectedFriend.name}`}</h3>
       <label>
         <svg
